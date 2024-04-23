@@ -13,13 +13,9 @@ final class ViewController: UIViewController {
     
     @IBOutlet weak var valueOfCounter: UILabel!
     @IBOutlet weak var buttonReset: UIButton!
-    
     @IBOutlet weak var buttonPlus: UIButton!
     @IBOutlet weak var buttonMinus: UIButton!
-
     @IBOutlet weak var counterLog: UITextView!
-    
-    private var date = Date().formatted()
     private var amountOfCounter: Int = 0
     
     override func viewDidLoad() {
@@ -39,27 +35,33 @@ final class ViewController: UIViewController {
         }
     }
     
+    func instanceDate() -> String {
+        let date = DateFormatter()
+        date.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        return date.string(from: Date())
+    }
+    
     @IBAction func pressPlus(_ sender: Any) {
         amountOfCounter += 1
         valueOfCounter.text = "Значение счетчика: \(amountOfCounter)"
-        counterLog.text += "\(date): значение изменено на +1\n"
+        counterLog.text += "\(instanceDate()): значение изменено на +1\n"
         scrollToBottom(textView: counterLog)
     }
     @IBAction func pressMinus(_ sender: Any) {
         if amountOfCounter != 0 {
             amountOfCounter -= 1
             valueOfCounter.text = "Значение счетчика: \(amountOfCounter)"
-            counterLog.text += "\(date): значение изменено на -1\n"
+            counterLog.text += "\(instanceDate()): значение изменено на -1\n"
             scrollToBottom(textView: counterLog)
         } else {
-            counterLog.text += "\(date): попытка уменьшить значение счетчика ниже 0\n"
+            counterLog.text += "\(instanceDate()): попытка уменьшить значение счетчика ниже 0\n"
             scrollToBottom(textView: counterLog)
             }
     }
     @IBAction func resetTheCounter(_ sender: Any) {
         amountOfCounter = 0
         valueOfCounter.text = "Значение счетчика: 0"
-        counterLog.text += "\(date): значение сброшено\n"
+        counterLog.text += "\(instanceDate()): значение сброшено\n"
         scrollToBottom(textView: counterLog)
     }
 }
